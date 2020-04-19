@@ -696,7 +696,7 @@ def chaseExec():
         print(operation)
         print('BUG!!!')
         return
-    ontimer(monsMove, 500)
+    ontimer(monsMove, 900)
 
 
 def monsMove():
