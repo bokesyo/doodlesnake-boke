@@ -718,7 +718,7 @@ def mainMove():
         if food_list == {}:
             over_control = True
             snake.penup()
-            snake.goto(-150, 0)
+            snake.goto(-250, 0)
             snake.write("CONGRATULATIONS!", font=["Arial Bold", 70])
             snake.pendown()
             ontimer(1000)
