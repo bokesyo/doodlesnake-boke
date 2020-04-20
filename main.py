@@ -77,53 +77,26 @@ def createFood():
 # turn right
 def right():
     global snake_dir
-    if snake_dir == 'u':
+    if snake_dir == 'u' or snake_dir == 'd':
         snake_dir = 'r'
-        # print('right')
-        # print(snake_dir)
-    elif snake_dir == 'd':
-        snake_dir = 'r'
-        # print('right')
-        # print(snake_dir)
-
 
 # turn left
 def left():
     global snake_dir
-    if snake_dir == 'u':
+    if snake_dir == 'u' or  snake_dir == 'l':
         snake_dir = 'l'
-        # print('left')
-        # print(snake_dir)
-    elif snake_dir == 'd':
-        snake_dir = 'l'
-        # print('left')
-        # print(snake_dir)
-
 
 # turn left
 def up():
     global snake_dir
-    if snake_dir == 'l':
+    if snake_dir == 'l' or snake_dir == 'r':
         snake_dir = 'u'
-        # print('up')
-        # print(snake_dir)
-    elif snake_dir == 'r':
-        snake_dir = 'u'
-        # print('up')
-        # print(snake_dir)
-
 
 # turn left
 def down():
     global snake_dir
-    if snake_dir == 'l':
+    if snake_dir == 'l' or snake_dir == 'r':
         snake_dir = 'd'
-        # print('down')
-        # print(snake_dir)
-    elif snake_dir == 'r':
-        snake_dir = 'd'
-        # print('down')
-        # print(snake_dir)
 
 
 def drawWhiteSquare():
@@ -297,7 +270,7 @@ def snakeMove():
     drawSnake(cod_list)
     n = n + 1
     update()
-    ontimer(mainMove, 500)
+    ontimer(mainMove, 200)
     # snake_timer = threading.Timer(0.5, mainMove)
     # snake_timer.start()
 
@@ -383,7 +356,7 @@ def tailExt(number):
     while card <= number:
         singleMoveTail()
         # print('Move is OK')
-        time.sleep(0.5)
+        time.sleep(0.3)
         # ontimer(singleMoveTail, 500)
         card = card + 1
     # delete food
@@ -718,10 +691,13 @@ def mainMove():
         if food_list == {}:
             over_control = True
             snake.penup()
-            snake.goto(-250, 0)
-            snake.write("CONGRATULATIONS!", font=["Arial Bold", 70])
-            snake.pendown()
-            ontimer(1000)
+            snake.goto(0, 0)
+            snake.write("CONGRATULATIONS!\n️", align="center",font=["Arial Bold", 35])
+            snake.write("✌️✌️✌️", align="center", font=["Arial Bold", 35])
+            time.sleep(20)
+            sys.exit()
+            # snake.pendown()
+            # ontimer(1000)
         if judgeInRange() == True:
             # print('Judge is True')
             # time.sleep(2)
@@ -730,7 +706,6 @@ def mainMove():
             # time.sleep(2)
         else:
             snakeMove()
-
 
 def main():
     # Create threads
