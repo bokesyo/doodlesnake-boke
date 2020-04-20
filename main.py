@@ -4,7 +4,7 @@ import random
 import threading
 import sys
 
-sys.setrecursionlimit(999999)  # set the maximum depth as 1500
+sys.setrecursionlimit(999999)  # set the maximum depth as 1800
 
 # Initialize
 snake_dir = 'u'
@@ -15,7 +15,7 @@ food = Turtle()
 mons = Turtle()
 screen = Screen()
 screen.setup(width=500, height=500)
-mons_pos = [-5, -5]
+mons_pos = [-10, -8]
 dir_mons = 'u'
 mons_stamp = 0
 over_control = False
@@ -66,11 +66,11 @@ def createFood():
         cod_pair = (x_fd, y_fd)
         food_list[i] = cod_pair
         food.penup()
-        food.goto(x_fd - 3, y_fd - 12)
+        food.goto(x_fd, y_fd)
         food.pendown()
         opt = str(i)
         # opt=str(i)+' '+str(x_fd)+' '+str(y_fd)
-        food.write(opt, font=["Arial Bold", 20])
+        food.write(opt, font=["Arial Bold", 10])
     update()
 
 
@@ -147,11 +147,8 @@ def drawRedSquare():
     snake.shapesize(1, 1, 0)
     back = snake.stamp()
     stamp_list.append(back)
-
     # print('Position of turtle '+str(snake.pos()))
-
     a = snake.pos()
-
     if (a[0] <= -240) and (a[1] >= 240) and (snake_dir == 'u'):
         # print('nw Vertex')
         right()
@@ -298,7 +295,7 @@ def snakeMove():
     n = n + 1
     update()
     ontimer(mainMove, 500)
-    # snake_timer = threading.Timer(0.5, mainMove)
+    # snake_timer = threading.Timer(0.8, mainMove)
     # snake_timer.start()
 
     # print('How much time has passed '+str(n))
@@ -384,7 +381,7 @@ def tailExt(number):
         singleMoveTail()
         # print('Move is OK')
         time.sleep(0.5)
-        # ontimer(singleMoveTail, 500)
+        # ontimer(singleMoveTail, 800)
         card = card + 1
     # delete food
     cod_food = food_list[number]
@@ -442,13 +439,15 @@ def judgeInRange():
 
 def drawMons():
     global mons_stamp
+    mons.hideturtle()
     tracer(False)
     mons.clearstamp(mons_stamp)
     # print('Previous monster cleared!')
     mons.pencolor("green")
     mons.fillcolor("green")
-    mons.shape("square")
-    mons.shapesize(1, 1, 0)
+    mons.shape("circle")
+    
+    mons.shapesize(2, 2, 0)
     mons_stamp = mons.stamp()
     # print('Get stamp id of monster')
     update()
@@ -516,188 +515,118 @@ def chaseArith():
 
 def chaseExec():
     operation = chaseArith()
-    print('Monster will turn -- ' + operation)
+    #print('Monster will turn -- ' + operation)
     global mons_pos
     if len(operation) == 1:
         if operation == 'u':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            y_mons = y_mons + 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is '+str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleU()
         elif operation == 'd':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            y_mons = y_mons - 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleD()
         elif operation == 'l':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            x_mons = x_mons - 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleD()
         elif operation == 'r':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            x_mons = x_mons + 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleR()
     elif len(operation) == 2:
         if operation == 'nw':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            y_mons = y_mons + 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleU()
             time.sleep(0.5)
-            # Then,
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            x_mons = x_mons - 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleL()
         elif operation == 'se':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            y_mons = y_mons - 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons, y_mons)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleR()
             time.sleep(0.5)
-            # Then,
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            x_mons = x_mons + 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleD()
         elif operation == 'sw':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            y_mons = y_mons - 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleD()
             time.sleep(0.5)
-            # Then,
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            x_mons = x_mons - 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleL()
         elif operation == 'ne':
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            y_mons = y_mons + 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleU()
             time.sleep(0.5)
-            # Then,
-            tracer(False)
-            x_mons = mons_pos[0]
-            y_mons = mons_pos[1]
-            x_mons = x_mons + 1
-            mons_pos = [x_mons, y_mons]
-            # print('Monster renewed')
-            # print('Monster coordinate is ' + str(mons_pos))
-            mons.penup()
-            mons.goto(x_mons * 20, y_mons * 20)
-            mons.pendown()
-            drawMons()
-            # print('Exec is OK')
-            update()
+            singleR()
     else:
-        print(operation)
-        print('BUG!!!')
+        #print(operation)
+        #print('BUG!!!')
         return
-    ontimer(monsMove, 900)
+    ontimer(monsMove, 500)
 
+
+def singleL():
+    global mons_pos
+    # Then,
+    tracer(False)
+    x_mons = mons_pos[0]
+    y_mons = mons_pos[1]
+    x_mons = x_mons - 1
+    mons_pos = [x_mons, y_mons]
+    # print('Monster renewed')
+    # print('Monster coordinate is ' + str(mons_pos))
+    mons.penup()
+    mons.goto(x_mons * 20, y_mons * 20)
+    mons.pendown()
+    drawMons()
+    # print('Exec is OK')
+    update()
+    tracer(False)
+    mons.hideturtle()
+
+def singleR():
+    global mons_pos
+    # Then,
+    tracer(False)
+    x_mons = mons_pos[0]
+    y_mons = mons_pos[1]
+    x_mons = x_mons + 1
+    mons_pos = [x_mons, y_mons]
+    # print('Monster renewed')
+    # print('Monster coordinate is ' + str(mons_pos))
+    mons.penup()
+    mons.goto(x_mons * 20, y_mons * 20)
+    mons.pendown()
+    drawMons()
+    # print('Exec is OK')
+    update()
+    tracer(False)
+    mons.hideturtle()
+
+
+def singleU():
+    global mons_pos
+    # Then,
+    tracer(False)
+    x_mons = mons_pos[0]
+    y_mons = mons_pos[1]
+    y_mons = y_mons + 1
+    mons_pos = [x_mons, y_mons]
+    # print('Monster renewed')
+    # print('Monster coordinate is ' + str(mons_pos))
+    mons.penup()
+    mons.goto(x_mons * 20, y_mons * 20)
+    mons.pendown()
+    drawMons()
+    # print('Exec is OK')
+    update()
+    tracer(False)
+    mons.hideturtle()
+
+
+def singleD():
+    global mons_pos
+    # Then,
+    tracer(False)
+    x_mons = mons_pos[0]
+    y_mons = mons_pos[1]
+    y_mons = y_mons - 1
+    mons_pos = [x_mons, y_mons]
+    # print('Monster renewed')
+    # print('Monster coordinate is ' + str(mons_pos))
+    mons.penup()
+    mons.goto(x_mons * 20, y_mons * 20)
+    mons.pendown()
+    drawMons()
+    # print('Exec is OK')
+    update()
+    tracer(False)
+    mons.hideturtle()
 
 def monsMove():
     global over_control
@@ -710,18 +639,48 @@ def mainMove():
     global n
     global food_list
     global over_control
-
+    global snake_list
+    global mons_pos
+    x_mons_j = mons_pos[0]
+    y_mons_j = mons_pos[1]
+    snake_head = snake_list[0]
+    x_snake_j = snake_head[0]
+    y_snake_j = snake_head[1]
+    delta_x = x_mons_j - x_snake_j
+    delta_y = y_mons_j - y_snake_j
+    if (abs(delta_x) <= 1) and (abs(delta_y) <= 1):
+        snake.penup()
+        snake.goto(-170, 0)
+        snake.pendown()
+        snake.write("Game Over", font=["Arial Bold", 70])
+        time.sleep(3)
+        return
     # print('mainMove invoked')
+    length_j = len(snake_list)
+    end_index = length_j - 1
+    snake_end = snake_list[end_index]
+    x_snake_je = snake_end[0]
+    y_snake_je = snake_end[1]
+    delta_xe = x_snake_je - x_snake_j
+    delta_ye = y_snake_je - y_snake_j
+    if (abs(delta_xe) < 1) and (abs(delta_ye) < 1):
+        snake.penup()
+        snake.goto(-170, 0)
+        snake.pendown()
+        snake.write("Game Over", font=["Arial Bold", 70])
+        time.sleep(3)
+        return
+
     if n == 0:
         snakeMove()
     else:
         if food_list == {}:
             over_control = True
             snake.penup()
-            snake.goto(-250, 0)
-            snake.write("CONGRATULATIONS!", font=["Arial Bold", 70])
+            snake.goto(-170, 0)
+            snake.write("Good Job", font=["Arial Bold", 70])
             snake.pendown()
-            ontimer(1000)
+            ontimer(500)
         if judgeInRange() == True:
             # print('Judge is True')
             # time.sleep(2)
@@ -731,17 +690,19 @@ def mainMove():
         else:
             snakeMove()
 
-
 def main():
+    ontimer(mainMove, 100)
+    ontimer(monsMove, 100)
     # Create threads
-    thread_snake = threading.Thread(target=mainMove)
-    thread_monster = threading.Thread(target=monsMove)
+    # thread_snake = threading.Thread(target=mainMove)
+    #thread_monster = threading.Thread(target=monsMove)
     # Start threads
-    thread_snake.start()
-    thread_monster.start()
-    print('Main thread has ended!')
+
+    #thread_snake.start()
+    #thread_monster.start()
+
+
+    #print('Main thread has ended!')
 
 
 startUI()
-
-
