@@ -443,11 +443,10 @@ def drawMons():
     tracer(False)
     mons.clearstamp(mons_stamp)
     # print('Previous monster cleared!')
-    mons.pencolor("green")
-    mons.fillcolor("green")
-    mons.shape("circle")
-    
-    mons.shapesize(2, 2, 0)
+    mons.pencolor("purple")
+    mons.fillcolor("purple")
+    mons.shape("square")
+    mons.shapesize(1, 1, 0)
     mons_stamp = mons.stamp()
     # print('Get stamp id of monster')
     update()
@@ -528,26 +527,22 @@ def chaseExec():
             singleR()
     elif len(operation) == 2:
         if operation == 'nw':
-            singleU()
-            time.sleep(0.5)
-            singleL()
+            singleU('l')
         elif operation == 'se':
-            singleR()
-            time.sleep(0.5)
-            singleD()
+            singleD('r')
         elif operation == 'sw':
-            singleD()
-            time.sleep(0.5)
-            singleL()
+            singleD('l')
         elif operation == 'ne':
-            singleU()
-            time.sleep(0.5)
-            singleR()
+            singleU('r')
     else:
         #print(operation)
         #print('BUG!!!')
         return
-    ontimer(monsMove, 500)
+    if len(operation) == 1:
+        ontimer(monsMove, 1000)
+    elif len(operation) == 2:
+        ontimer(monsMove, 2000)
+
 
 
 def singleL():
@@ -567,7 +562,6 @@ def singleL():
     # print('Exec is OK')
     update()
     tracer(False)
-    mons.hideturtle()
 
 def singleR():
     global mons_pos
@@ -586,10 +580,9 @@ def singleR():
     # print('Exec is OK')
     update()
     tracer(False)
-    mons.hideturtle()
 
 
-def singleU():
+def singleU(dirm='Default'):
     global mons_pos
     # Then,
     tracer(False)
@@ -606,10 +599,15 @@ def singleU():
     # print('Exec is OK')
     update()
     tracer(False)
-    mons.hideturtle()
+    if dirm == 'l':
+        #pass
+        ontimer(singleL, 1000)
+    if dirm == 'r':
+        #pass
+        ontimer(singleR, 1000)
 
 
-def singleD():
+def singleD(dirm='Default'):
     global mons_pos
     # Then,
     tracer(False)
@@ -626,7 +624,13 @@ def singleD():
     # print('Exec is OK')
     update()
     tracer(False)
-    mons.hideturtle()
+    if dirm == 'l':
+        #pass
+        ontimer(singleL, 1000)
+    if dirm == 'r':
+        #pass
+        ontimer(singleR, 1000)
+
 
 def monsMove():
     global over_control
@@ -653,7 +657,7 @@ def mainMove():
         snake.goto(-170, 0)
         snake.pendown()
         snake.write("Game Over", font=["Arial Bold", 70])
-        time.sleep(3)
+        ontimer(1000)
         return
     # print('mainMove invoked')
     length_j = len(snake_list)
@@ -668,7 +672,7 @@ def mainMove():
         snake.goto(-170, 0)
         snake.pendown()
         snake.write("Game Over", font=["Arial Bold", 70])
-        time.sleep(3)
+        ontimer(1000)
         return
 
     if n == 0:
@@ -680,7 +684,7 @@ def mainMove():
             snake.goto(-170, 0)
             snake.write("Good Job", font=["Arial Bold", 70])
             snake.pendown()
-            ontimer(500)
+            #ontimer(500)
         if judgeInRange() == True:
             # print('Judge is True')
             # time.sleep(2)
@@ -694,7 +698,7 @@ def main():
     ontimer(mainMove, 100)
     ontimer(monsMove, 100)
     # Create threads
-    # thread_snake = threading.Thread(target=mainMove)
+    #thread_snake = threading.Thread(target=mainMove)
     #thread_monster = threading.Thread(target=monsMove)
     # Start threads
 
@@ -706,3 +710,4 @@ def main():
 
 
 startUI()
+
